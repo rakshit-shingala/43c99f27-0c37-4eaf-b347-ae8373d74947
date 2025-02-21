@@ -2,6 +2,9 @@
 
 # ACER coding challenge solution
 
+## Assumptions
+* Student can only take assessment multiple times for single type. Hence, solution is not implemented for student taking different type of assessments.
+
 ## Prerequisite
 This solution for CLI application is not using any framework or libraries and is written using PHP
 
