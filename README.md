@@ -13,5 +13,5 @@ This solution for CLI application is not using any framework or libraries and is
 ## Steps to execute report
 1. Download this project.
 2. Open command line terminal.
-3. With terminal, traverse to `bin` folder within the project.
+3. Within terminal, traverse inside `bin` folder available in the project.
 4. To execute report type `php console.php report` within terminal and hit enter. 
