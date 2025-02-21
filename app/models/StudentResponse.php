@@ -73,4 +73,29 @@ class StudentResponse extends AppModel {
 
       return $strandResultsStr;
    }
+
+   public function getFeedbackForWrongAnswers() {
+      $app = ConsoleApplication::getInstance();
+
+      // Get data for all questions
+      $questions = $app->getDataSource()->getQuestions();
+
+      // Fing wrong answers
+      $feedback = "";
+      foreach ($this->responses as $questionResponse) {
+         $questionId = $questionResponse['questionId'];
+         if (!isset($questions[$questionId])) {
+            echo "Student has response for question which does not exist.\n";
+            exit;
+         }
+
+         $question = $questions[$questionId];
+         $answerId = $questionResponse['response'];
+         if (!$question->isAnsweredCorrectly($answerId)) {
+            $feedback .= $question->getFeedbackForWrongAnswer($answerId) . "\n";
+         }
+      }
+
+      return $feedback;
+   }
 }
