@@ -3,8 +3,9 @@
 require_once __DIR__ . "/../commands/ReportCommand.php";
 
 class CommandHandler {
+
    private $commands = [
-       "report" => ReportCommand::class
+      "report" => ReportCommand::class
    ];
 
    public function handle($args) {
