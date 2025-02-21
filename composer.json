@@ -1,5 +1,6 @@
 {
     "name": "rakshit-shingala/43c99f27-0c37-4eaf-b347-ae8373d74947",
     "description": "ACER coding challenge",
-    "type": "project"
+    "type": "project",
+    "license": "MIT"
 }
