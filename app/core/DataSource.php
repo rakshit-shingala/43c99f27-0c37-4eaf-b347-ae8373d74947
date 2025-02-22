@@ -8,6 +8,8 @@ abstract class DataSource {
 
    abstract public function getRecentlyCompletedStudentAssessment(string $studentID);
 
+   abstract public function getOldestCompletedStudentAssessment(string $studentID);
+
    abstract public function getCompletedStudentAssessments(string $studentID);
 
    abstract public function getAssessmentById(string $assessmentID);

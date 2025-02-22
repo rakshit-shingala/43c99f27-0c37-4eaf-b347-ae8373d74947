@@ -64,7 +64,35 @@ class JSONDataSource extends DataSource {
          }
 
          // Select first assessment if found
-         if (empty($data) || DateTimeHandler::isGreater($data['completed'], $studentResponse['completed'], $format)) {
+         if (empty($data) || DateTimeHandler::isRecent($data['completed'], $studentResponse['completed'], $format)) {
+            $data = $studentResponse;
+         }
+      }
+
+      return $data ? new StudentResponse($data) : null;
+   }
+
+   /**
+    * Retrieve student responses only for most oldest completed assessment
+    * within JSON file which matches student id.
+    * 
+    * @param string $studentID Primary key of student
+    * @return @return null|\StudentResponse
+    */
+   public function getOldestCompletedStudentAssessment(string $studentID) {
+      $data = null;
+      $app = ConsoleApplication::getInstance();
+      $format = $app->getParam("saved_date_format");
+
+      $studentResponses = $this->getStudentResponses();
+      foreach ($studentResponses as $studentResponse) {
+         // Analyzing completed assessments only which matches provided student
+         if (!isset($studentResponse['completed']) || $studentResponse['student']['id'] !== $studentID) {
+            continue;
+         }
+
+         // Select first assessment if found
+         if (empty($data) || DateTimeHandler::isOlder($data['completed'], $studentResponse['completed'], $format)) {
             $data = $studentResponse;
          }
       }
@@ -91,6 +119,8 @@ class JSONDataSource extends DataSource {
 
          $data[] = $studentResponse;
       }
+
+      return $data;
    }
 
    /**
