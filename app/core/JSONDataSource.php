@@ -58,18 +58,20 @@ class JSONDataSource extends DataSource {
 
       $studentResponses = $this->getStudentResponses();
       foreach ($studentResponses as $studentResponse) {
+         $studentResponseModel = new StudentResponse($studentResponse);
+
          // Analyzing completed assessments only which matches provided student
          if (!isset($studentResponse['completed']) || $studentResponse['student']['id'] !== $studentID) {
             continue;
          }
 
          // Select first assessment if found
-         if (empty($data) || DateTimeHandler::isRecent($data['completed'], $studentResponse['completed'], $format)) {
-            $data = $studentResponse;
+         if (empty($data) || DateTimeHandler::isRecent($data->completed, $studentResponseModel->completed, $format)) {
+            $data = $studentResponseModel;
          }
       }
 
-      return $data ? new StudentResponse($data) : null;
+      return $data;
    }
 
    /**
@@ -86,18 +88,20 @@ class JSONDataSource extends DataSource {
 
       $studentResponses = $this->getStudentResponses();
       foreach ($studentResponses as $studentResponse) {
+         $studentResponseModel = new StudentResponse($studentResponse);
+
          // Analyzing completed assessments only which matches provided student
          if (!isset($studentResponse['completed']) || $studentResponse['student']['id'] !== $studentID) {
             continue;
          }
 
          // Select first assessment if found
-         if (empty($data) || DateTimeHandler::isOlder($data['completed'], $studentResponse['completed'], $format)) {
-            $data = $studentResponse;
+         if (empty($data) || DateTimeHandler::isOlder($data->completed, $studentResponseModel->completed, $format)) {
+            $data = $studentResponseModel;
          }
       }
 
-      return $data ? new StudentResponse($data) : null;
+      return $data;
    }
 
    /**
@@ -117,7 +121,7 @@ class JSONDataSource extends DataSource {
             continue;
          }
 
-         $data[] = $studentResponse;
+         $data[] = new StudentResponse($studentResponse);
       }
 
       return $data;
@@ -149,15 +153,11 @@ class JSONDataSource extends DataSource {
       $fileHandler = new JSONFileHandler($this->location['questions'], "id");
 
       $fileData = $fileHandler->readAll();
-      if (empty($fileData)) {
-         echo "Questions not found!\n\n";
-         exit;
-      }
-
       $questions = [];
       foreach ($fileData as $data) {
          $questions[$data['id']] = new Question($data);
       }
+
       return $questions;
    }
 }

@@ -17,8 +17,7 @@ abstract class ConsoleReport {
       // Get data for student
       $this->student = $this->dataSource->getStudentById($studentID);
       if (empty($this->student)) {
-         echo "Student not found matching provided id!\n\n";
-         exit;
+         throw new InvalidStudentException("Record with ID \"$studentID\" not found.");
       }
    }
 

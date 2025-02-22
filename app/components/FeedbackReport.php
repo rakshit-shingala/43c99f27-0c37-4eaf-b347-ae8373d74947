@@ -8,12 +8,14 @@ class FeedbackReport extends ConsoleReport {
       // Get data for recent assessment completed by student
       $studentResponse = $this->dataSource->getRecentlyCompletedStudentAssessment($this->student->id);
       if (empty($studentResponse)) {
-         echo "Student has not completed any assessment!!\n\n";
-         exit;
+         throw new InvalidStudentResponseException("0 assessment completed.");
       }
 
       // Get data for assessment completd by student
       $assessment = $this->dataSource->getAssessmentById($studentResponse->assessmentId);
+      if (empty($assessment)) {
+         throw new InvalidAssessmentException("Record with ID \"$studentResponse->assessmentId\" not found.");
+      }
 
       // Print report
       echo strtr("{student_full_name} recently completed {assessment_title} assessment on {date_completed}\n"

@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__ . '/../models/AppModel.php';
+require_once __DIR__ . '/../core/exceptions/InvalidAssessmentException.php';
 
 class Assessment extends AppModel {
 
@@ -10,17 +11,22 @@ class Assessment extends AppModel {
    public array $questions;
 
    public function loadData(array $data) {
-      $this->id = $data['id'] ?? null;
-      $this->name = $data['name'] ?? null;
+      $this->validate($data);
+      $this->id = $data['id'];
+      $this->name = $data['name'];
       $this->questions = $data['questions'] ?? null;
    }
 
-   public function getName() {
-      if (empty($this->name)) {
-         echo "Name is not set for $this->id.\n";
-         exit;
+   public function validate($data) {
+      if (empty($data['id'])) {
+         throw new InvalidAssessmentException("ID is required.");
       }
+      if (empty($data['name'])) {
+         throw new InvalidAssessmentException("Name is required.");
+      }
+   }
 
+   public function getName() {
       return $this->name;
    }
 }

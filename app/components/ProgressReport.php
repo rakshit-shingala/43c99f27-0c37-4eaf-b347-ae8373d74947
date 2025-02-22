@@ -9,12 +9,15 @@ class ProgressReport extends ConsoleReport {
       // Get all assessments completed by student
       $studentResponses = $this->dataSource->getCompletedStudentAssessments($this->student->id);
       if (empty($studentResponses)) {
-         echo "Student has not completed any assessment!!\n\n";
-         exit;
+         throw new InvalidStudentResponseException("0 assessment completed.");
       }
 
       // Get data for assessment completd by student
-      $assessment = $this->dataSource->getAssessmentById($studentResponses[0]['assessmentId']);
+      $assessmentID = $studentResponses[0]->assessmentId;
+      $assessment = $this->dataSource->getAssessmentById($assessmentID);
+      if (empty($assessment)) {
+         throw new InvalidAssessmentException("Record with ID \"$assessmentID\" not found.");
+      }
 
       // Print report
       echo strtr("{student_full_name} has completed {assessment_title} assessment {total_completed} times in total. Date and raw score given below:\n\n", [
@@ -26,9 +29,9 @@ class ProgressReport extends ConsoleReport {
       // Show progress summary of each assessment taken
       foreach ($studentResponses as $studentResponse) {
          echo strtr("Date: {date_completed}, Raw Score: {total_correct} out of {total}\n", [
-            '{date_completed}' => DateTimeHandler::convertDate($studentResponse['completed'], 'short'),
-            '{total_correct}' => $studentResponse['results']['rawScore'],
-            '{total}' => count($studentResponse['responses'])
+            '{date_completed}' => DateTimeHandler::convertDate($studentResponse->completed, 'short'),
+            '{total_correct}' => $studentResponse->results['rawScore'],
+            '{total}' => count($studentResponse->responses)
          ]);
       }
 

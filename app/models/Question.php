@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__ . '/../models/AppModel.php';
+require_once __DIR__ . '/../core/exceptions/InvalidQuestionException.php';
 
 class Question extends AppModel {
 
@@ -12,67 +13,63 @@ class Question extends AppModel {
    public array $config;
 
    public function loadData(array $data) {
-      $this->id = $data['id'] ?? null;
-      $this->stem = $data['stem'] ?? null;
+      $this->validate($data);
+      $this->id = $data['id'];
+      $this->stem = $data['stem'];
       $this->type = $data['type'] ?? null;
-      $this->strand = $data['strand'] ?? null;
-      $this->config = $data['config'] ?? null;
+      $this->strand = $data['strand'];
+      $this->config = $data['config'];
+   }
+
+   public function validate($data) {
+      if (empty($data['id'])) {
+         throw new InvalidQuestionException("ID is required.");
+      }
+      if (empty($data['stem'])) {
+         throw new InvalidQuestionException("Stem is required.");
+      }
+      if (empty($data['strand'])) {
+         throw new InvalidQuestionException("Strand is required.");
+      }
+      if (empty($data['config'])) {
+         throw new InvalidQuestionException("Config is required.");
+      }
+      if (empty($data['config']['key'])) {
+         throw new InvalidQuestionException("Answer key is required.");
+      }
+      if (empty($data['config']['hint'])) {
+         throw new InvalidQuestionException("Hint is required.");
+      }
+      if (empty($data['config']['options'])) {
+         throw new InvalidQuestionException("Options are required.");
+      }
    }
 
    public function getCorrectAnswer() {
-      if (empty($this->config) || empty($this->config['key'])) {
-         echo "Correct answer is not set for $this->id.\n";
-         exit;
-      }
-
       return $this->config['key'];
    }
 
    public function getStem() {
-      if (empty($this->stem)) {
-         echo "Stem is not set for $this->id.\n";
-         exit;
-      }
-
       return $this->stem;
    }
 
    public function getHint() {
-      if (empty($this->config) || empty($this->config['hint'])) {
-         echo "Hint is not set for $this->id.\n";
-         exit;
-      }
-
       return $this->config['hint'];
    }
 
    public function getStrand() {
-      if (empty($this->strand)) {
-         echo "Strand is not set for $this->id.\n";
-         exit;
-      }
-
       return $this->strand;
    }
 
    public function getOptions() {
-      if (empty($this->config) || empty($this->config['options'])) {
-         echo "Options is not set for $this->id.\n";
-         exit;
-      }
-
       return $this->config['options'];
    }
 
    public function getOption($optionID) {
       $options = $this->getOptions();
       $index = array_search($optionID, array_column($options, 'id'));
-      if ($index === false) {
-         echo "Option is missing for $this->id.\n";
-         exit;
-      }
 
-      return $options[$index];
+      return $index === false ? null : $options[$index];
    }
 
    public function getCorrectAnswerOption() {
