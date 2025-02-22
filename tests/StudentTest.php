@@ -6,14 +6,22 @@ require_once __DIR__ . '/../app/models/Student.php';
 
 class StudentTest extends TestCase {
 
+   private ?Student $student;
+
    public function testFullNameReturnsCorrectFormat() {
-      $student = new Student([
+      $this->assertEquals("John Doe", $this->student->getFullName());
+   }
+
+   protected function setUp(): void {
+      $this->student = new Student([
          'id' => 'student1',
          'firstName' => 'John',
          'lastName'=> 'Doe',
          'yearLevel' => 3
       ]);
+   }
 
-      $this->assertEquals("John Doe", $student->getFullName());
+   protected function tearDown(): void {
+      $this->student = null;
    }
 }

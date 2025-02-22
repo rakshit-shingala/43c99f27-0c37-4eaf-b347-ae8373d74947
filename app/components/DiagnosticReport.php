@@ -21,7 +21,7 @@ class DiagnosticReport extends ConsoleReport {
             . "He got {total_correct} questions right out of {total}. Details by strand given below:\n\n"
             . "{strand_details}", [
          '{student_full_name}' => $this->student->getFullName(),
-         '{assessment_title}' => $assessment->name,
+         '{assessment_title}' => $assessment->getName(),
          '{date_completed}' => DateTimeHandler::convertDate($studentResponse->completed, 'long'),
          '{total_correct}' => $studentResponse->results['rawScore'],
          '{total}' => count($studentResponse->responses),

@@ -19,7 +19,7 @@ class FeedbackReport extends ConsoleReport {
       echo strtr("{student_full_name} recently completed {assessment_title} assessment on {date_completed}\n"
             . "He got {total_correct} questions right out of {total}.", [
          '{student_full_name}' => $this->student->getFullName(),
-         '{assessment_title}' => $assessment->name,
+         '{assessment_title}' => $assessment->getName(),
          '{date_completed}' => DateTimeHandler::convertDate($studentResponse->completed, 'long'),
          '{total_correct}' => $studentResponse->results['rawScore'],
          '{total}' => count($studentResponse->responses)

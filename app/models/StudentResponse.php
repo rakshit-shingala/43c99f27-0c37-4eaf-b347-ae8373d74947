@@ -90,9 +90,9 @@ class StudentResponse extends AppModel {
          }
 
          $question = $questions[$questionId];
-         $answerId = $questionResponse['response'];
-         if (!$question->isAnsweredCorrectly($answerId)) {
-            $feedback .= $question->getFeedbackForWrongAnswer($answerId) . "\n";
+         $answerFeedback = $question->getFeedbackForWrongAnswer($questionResponse['response']);
+         if ($answerFeedback) {
+            $feedback .= $answerFeedback . "\n";
          }
       }
 

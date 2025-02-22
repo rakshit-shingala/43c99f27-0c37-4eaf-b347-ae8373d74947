@@ -84,19 +84,23 @@ class Question extends AppModel {
    }
 
    public function getFeedbackForWrongAnswer($answerID) {
-      $answerOption = $this->getOption($answerID);
-      $correctAnswerOption = $this->getCorrectAnswerOption();
+      if (!$this->isAnsweredCorrectly($answerID)) {
+         $answerOption = $this->getOption($answerID);
+         $correctAnswerOption = $this->getCorrectAnswerOption();
 
-      return strtr("Question: {stem}\n"
-            . "Your Answer: {answer_label} with value {answer_value}\n"
-            . "Right Answer: {correct_answer_label} with value {correct_answer_value}\n"
-            . "Hint: {hint}\n", [
-         '{stem}' => $this->getStem(),
-         '{answer_label}' => $answerOption['label'],
-         '{answer_value}' => $answerOption['value'],
-         '{correct_answer_label}' => $correctAnswerOption['label'],
-         '{correct_answer_value}' => $correctAnswerOption['value'],
-         '{hint}' => $this->getHint()
-      ]);
+         return strtr("Question: {stem}\n"
+               . "Your Answer: {answer_label} with value {answer_value}\n"
+               . "Right Answer: {correct_answer_label} with value {correct_answer_value}\n"
+               . "Hint: {hint}\n", [
+            '{stem}' => $this->getStem(),
+            '{answer_label}' => $answerOption['label'],
+            '{answer_value}' => $answerOption['value'],
+            '{correct_answer_label}' => $correctAnswerOption['label'],
+            '{correct_answer_value}' => $correctAnswerOption['value'],
+            '{hint}' => $this->getHint()
+         ]);
+      }
+
+      return null;
    }
 }

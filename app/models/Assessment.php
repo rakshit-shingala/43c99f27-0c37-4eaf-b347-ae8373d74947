@@ -14,4 +14,13 @@ class Assessment extends AppModel {
       $this->name = $data['name'] ?? null;
       $this->questions = $data['questions'] ?? null;
    }
+
+   public function getName() {
+      if (empty($this->name)) {
+         echo "Name is not set for $this->id.\n";
+         exit;
+      }
+
+      return $this->name;
+   }
 }

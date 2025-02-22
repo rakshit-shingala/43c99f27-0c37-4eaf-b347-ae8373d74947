@@ -19,7 +19,7 @@ class ProgressReport extends ConsoleReport {
       // Print report
       echo strtr("{student_full_name} has completed {assessment_title} assessment {total_completed} times in total. Date and raw score given below:\n\n", [
          '{student_full_name}' => $this->student->getFullName(),
-         '{assessment_title}' => $assessment->name,
+         '{assessment_title}' => $assessment->getName(),
          '{total_completed}' => count($studentResponses)
       ]);
 
