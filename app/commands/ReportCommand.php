@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/../core/Command.php';
+require_once __DIR__ . '/../commands/Command.php';
 require_once __DIR__ . '/../components/DiagnosticReport.php';
 require_once __DIR__ . '/../components/ProgressReport.php';
 require_once __DIR__ . '/../components/FeedbackReport.php';

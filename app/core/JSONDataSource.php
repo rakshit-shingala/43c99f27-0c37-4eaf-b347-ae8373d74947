@@ -1,7 +1,7 @@
 <?php
 
 require_once __DIR__ . '/../core/DataSource.php';
-require_once __DIR__ . '/../core/DateTimeHandler.php';
+require_once __DIR__ . '/../components/DateTimeHandler.php';
 require_once __DIR__ . '/../components/JSONFileHandler.php';
 require_once __DIR__ . '/../models/Student.php';
 require_once __DIR__ . '/../models/Assessment.php';

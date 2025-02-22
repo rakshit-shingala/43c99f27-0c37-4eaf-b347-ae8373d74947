@@ -1,7 +1,7 @@
 <?php
 
-require_once __DIR__ . '/../core/ConsoleReport.php';
-require_once __DIR__ . '/../core/DateTimeHandler.php';
+require_once __DIR__ . '/ConsoleReport.php';
+require_once __DIR__ . '/DateTimeHandler.php';
 
 class ProgressReport extends ConsoleReport {
 

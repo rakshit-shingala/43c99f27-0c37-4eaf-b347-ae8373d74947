@@ -2,7 +2,7 @@
 
 use PHPUnit\Framework\TestCase;
 
-require_once __DIR__ . '/../app/core/DateTimeHandler.php';
+require_once __DIR__ . '/../app/components/DateTimeHandler.php';
 
 class DateTimeHandlerTest extends TestCase {
 

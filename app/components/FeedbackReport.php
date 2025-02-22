@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/../core/ConsoleReport.php';
+require_once __DIR__ . '/ConsoleReport.php';
 
 class FeedbackReport extends ConsoleReport {
 
