@@ -30,7 +30,7 @@ class FeedbackReport extends ConsoleReport {
       // Only display feedback for wrong answers if student didn't get all correct
       if ($studentResponse->results['rawScore'] !== count($studentResponse->responses)) {
          echo strtr(" Feedback for wrong answers given below:\n\n{wrong_answers}", [
-            '{wrong_answers}' => $studentResponse->getFeedbackForWrongAnswers()
+            '{wrong_answers}' => $studentResponse->getFeedbackForWrongAnswers($this->dataSource->getQuestions())
          ]);
       }
    }

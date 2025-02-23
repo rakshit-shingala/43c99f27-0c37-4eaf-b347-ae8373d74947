@@ -56,12 +56,7 @@ class StudentResponse extends AppModel {
       }
    }
 
-   public function getStrandDetails() {
-      $app = ConsoleApplication::getInstance();
-
-      // Get data for all questions
-      $questions = $app->getDataSource()->getQuestions();
-
+   public function getStrandDetails(array $questions) {
       // Generate strand detail
       $strands = [];
       foreach ($this->responses as $questionResponse) {
@@ -87,9 +82,9 @@ class StudentResponse extends AppModel {
       return $strands;
    }
 
-   public function getStrandDetailsStr() {
+   public function getStrandDetailsStr(array $questions) {
       // Get strand details
-      $strandResults = $this->getStrandDetails();
+      $strandResults = $this->getStrandDetails($questions);
 
       $strandResultsStr = "";
       foreach ($strandResults as $strandTitle => $strandResult) {
@@ -103,12 +98,7 @@ class StudentResponse extends AppModel {
       return $strandResultsStr;
    }
 
-   public function getFeedbackForWrongAnswers() {
-      $app = ConsoleApplication::getInstance();
-
-      // Get data for all questions
-      $questions = $app->getDataSource()->getQuestions();
-
+   public function getFeedbackForWrongAnswers(array $questions) {
       // Fing wrong answers
       $feedback = "";
       foreach ($this->responses as $questionResponse) {

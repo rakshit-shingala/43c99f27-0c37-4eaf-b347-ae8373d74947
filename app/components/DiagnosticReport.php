@@ -27,7 +27,7 @@ class DiagnosticReport extends ConsoleReport {
          '{date_completed}' => DateTimeHandler::convertDate($studentResponse->completed, 'long'),
          '{total_correct}' => $studentResponse->results['rawScore'],
          '{total}' => count($studentResponse->responses),
-         '{strand_details}' => $studentResponse->getStrandDetailsStr()
+         '{strand_details}' => $studentResponse->getStrandDetailsStr($this->dataSource->getQuestions())
       ]);
    }
 }
